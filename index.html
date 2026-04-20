@@ -14,6 +14,7 @@
             --text-muted: #a0a0a0;
             --accent: #38bdf8;
             --border: rgba(255, 255, 255, 0.08);
+            --input-bg: #1d1d1d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,7 +27,7 @@
             min-height: 100vh;
         }
 
-        /* Sidebar - Design curat */
+        /* Sidebar */
         nav {
             width: 260px;
             background-color: var(--sidebar);
@@ -36,14 +37,10 @@
             padding: 40px 24px;
             position: fixed;
             height: 100vh;
+            z-index: 100;
         }
 
-        .logo {
-            font-family: 'Instrument Serif', serif;
-            font-size: 2rem;
-            margin-bottom: 48px;
-            color: var(--text-main);
-        }
+        .logo { font-family: 'Instrument Serif', serif; font-size: 2rem; margin-bottom: 48px; }
 
         .nav-link {
             color: var(--text-muted);
@@ -53,7 +50,6 @@
             margin-bottom: 8px;
             transition: all 0.2s ease;
             cursor: pointer;
-            display: block;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -62,145 +58,146 @@
             border: 1px solid var(--border);
         }
 
-        /* Zona de conținut */
-        main {
-            margin-left: 260px;
-            flex: 1;
-            padding: 80px 10%;
-        }
+        /* Main Content */
+        main { margin-left: 260px; flex: 1; padding: 80px 10%; }
 
-        .header-section { margin-bottom: 60px; }
-
-        .date-label {
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        h1 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 4rem;
-            font-weight: 400;
-            line-height: 1.1;
-        }
-
-        h1 span { font-style: italic; opacity: 0.6; }
-
-        /* Grid de carduri */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .card {
-            background-color: var(--card);
-            border: 1px solid var(--border);
-            padding: 32px;
-            border-radius: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover { transform: translateY(-5px); border-color: rgba(56, 189, 248, 0.4); }
-
-        .card-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .card-value { font-size: 2.5rem; font-weight: 600; margin-bottom: 8px; }
-
-        .card-footer { font-size: 0.85rem; color: var(--text-muted); }
-
-        /* Utilități pentru secțiuni */
         .section { display: none; animation: fadeIn 0.4s ease forwards; }
         .section.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .header-section { margin-bottom: 50px; }
+        .date-label { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+        h1 { font-family: 'Instrument Serif', serif; font-size: 3.5rem; font-weight: 400; }
+        h1 span { font-style: italic; opacity: 0.5; }
+
+        /* Inputs y Cards */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 24px;
         }
 
-        @media (max-width: 900px) {
-            nav { width: 80px; padding: 40px 15px; }
-            .nav-link span, .logo { display: none; }
-            main { margin-left: 80px; padding: 40px 20px; }
-            h1 { font-size: 2.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+
+        label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; }
+        
+        input, textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
         }
+
+        input:focus { border-color: var(--accent); }
+
+        .res-box { text-align: center; padding: 20px; border-radius: 15px; background: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent); }
+        .res-value { font-size: 3rem; font-weight: 600; color: var(--accent); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <nav>
         <div class="logo">UniFlow</div>
-        <div class="nav-link active" onclick="showSection(this, 'home')"><span>Dashboard</span></div>
-        <div class="nav-link" onclick="showSection(this, 'materias')"><span>Materias</span></div>
-        <div class="nav-link" onclick="showSection(this, 'notas')"><span>Notas</span></div>
+        <div class="nav-link active" onclick="showSection(this, 'home')">Dashboard</div>
+        <div class="nav-link" onclick="showSection(this, 'mats')">Materias</div>
+        <div class="nav-link" onclick="showSection(this, 'calc')">Calculadora</div>
     </nav>
 
     <main>
         <div id="home" class="section active">
             <div class="header-section">
-                <span class="date-label" id="current-date">CARGANDO...</span>
-                <h1>Buenas noches, <span>Marcos</span></h1>
+                <span class="date-label" id="date">--</span>
+                <h1>Panel de <span>Marcos</span></h1>
             </div>
+            <div class="card">
+                <label>Nota rápida / Pendientes</label>
+                <textarea id="quick-note" rows="5" placeholder="Escribe aquí tus tareas o recordatorios de reparación..."></textarea>
+            </div>
+        </div>
 
-            <div class="stats-grid">
+        <div id="mats" class="section">
+            <div class="header-section">
+                <h1>Mis <span>Materias</span></h1>
+            </div>
+            <div class="grid">
                 <div class="card">
-                    <span class="card-title">Materias Activas</span>
-                    <div class="card-value">2</div>
-                    <div class="card-footer">Informatics @ UNGS</div>
+                    <input type="text" id="m1" placeholder="Nombre Materia 1">
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">UNGS - 2do Año</p>
                 </div>
                 <div class="card">
-                    <span class="card-title">Promedio Actual</span>
-                    <div class="card-value">--</div>
-                    <div class="card-footer">Basado en el último semestre</div>
+                    <input type="text" id="m2" placeholder="Nombre Materia 2">
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">UNGS - 2do Año</p>
                 </div>
             </div>
         </div>
 
-        <div id="materias" class="section">
+        <div id="calc" class="section">
             <div class="header-section">
-                <span class="date-label">ACADÉMICO</span>
-                <h1>Tus <span>Materias</span></h1>
+                <h1>Calculadora <span>Promedio</span></h1>
             </div>
-            <div class="card" style="max-width: 500px;">
-                <p style="color: var(--text-muted)">Aquí podrás gestionar tus cursos de 2do año.</p>
-            </div>
-        </div>
-
-        <div id="notas" class="section">
-            <div class="header-section">
-                <span class="date-label">CALCULADORA</span>
-                <h1>Tus <span>Resultados</span></h1>
-            </div>
-            <div class="card" style="max-width: 500px;">
-                <p style="color: var(--text-muted)">Calcula si necesitas ir a final o promocionas.</p>
+            <div class="grid">
+                <div class="card">
+                    <label>Parcial 1</label>
+                    <input type="number" id="p1" placeholder="0" oninput="calc()">
+                    <br><br>
+                    <label>Parcial 2</label>
+                    <input type="number" id="p2" placeholder="0" oninput="calc()">
+                </div>
+                <div class="res-box">
+                    <label>Promedio Final</label>
+                    <div class="res-value" id="res-val">0.0</div>
+                    <p id="res-status" style="font-weight: 600; letter-spacing: 1px;">-</p>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
-        function showSection(element, sectionId) {
-            // Actualizează link-urile din navigație
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            element.classList.add('active');
-
-            // Schimbă secțiunea vizibilă
-            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+        // Navegación
+        function showSection(btn, id) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        // Actualizare dată în timp real
+        // Calculadora
+        function calc() {
+            const n1 = parseFloat(document.getElementById('p1').value) || 0;
+            const n2 = parseFloat(document.getElementById('p2').value) || 0;
+            const avg = (n1 + n2) / 2;
+            document.getElementById('res-val').innerText = avg.toFixed(1);
+            
+            const status = document.getElementById('res-status');
+            if(avg >= 7) { status.innerText = "PROMOCIONADO"; status.style.color = "#4ade80"; }
+            else if(avg >= 4) { status.innerText = "A FINAL"; status.style.color = "#fbbf24"; }
+            else { status.innerText = "RECURSA"; status.style.color = "#f87171"; }
+        }
+
+        // Auto-guardado (LocalStorage)
+        const fields = ['quick-note', 'm1', 'm2', 'p1', 'p2'];
+        fields.forEach(field => {
+            const el = document.getElementById(field);
+            // Cargar
+            el.value = localStorage.getItem(field) || "";
+            // Guardar al escribir
+            el.addEventListener('input', () => {
+                localStorage.setItem(field, el.value);
+            });
+        });
+
+        // Inicializar fecha y calc
         const options = { weekday: 'long', day: 'numeric', month: 'long' };
-        const today = new Date().toLocaleDateString('es-ES', options).toUpperCase();
-        document.getElementById('current-date').innerText = today;
+        document.getElementById('date').innerText = new Date().toLocaleDateString('es-ES', options).toUpperCase();
+        calc();
     </script>
 
 </body>
