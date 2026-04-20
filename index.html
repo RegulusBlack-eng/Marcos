@@ -208,6 +208,81 @@
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
     document.getElementById('current-date').innerText = d.toLocaleDateString('es-AR', options).toUpperCase();
 </script>
+    <section id="dash" class="section active">
+        <span class="date-badge" id="current-date">LUNES 20 DE ABRIL</span>
+        <h1>Buenas noches, <span>Marcos</span></h1>
+        <p class="subtitle">Panel de control académico. Segundo año - Informática.</p>
+
+        <div class="grid">
+            <div class="card">
+                <span class="card-label">Cursando actualmente</span>
+                <div class="card-value" id="count-mats">2</div>
+                <div class="card-sub">Materias regulares en UNGS</div>
+            </div>
+            
+            <div class="card" style="cursor:pointer; border-color: var(--accent);" onclick="window.open('https://github.com/RegulusBlack-eng', '_blank')">
+                <span class="card-label">Development</span>
+                <div class="card-value" style="font-size: 1.2rem;">Cesar Electrónica</div>
+                <div class="card-sub">Abrir repositorio de trabajo →</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calc" class="section">
+        <span class="date-badge">TOOLS</span>
+        <h1>Calculadora de <span>Notas</span></h1>
+        <div class="grid" style="margin-top: 20px;">
+            <div class="card">
+                <span class="card-label">Parcial 1</span>
+                <input type="number" id="n1" placeholder="Nota..." style="width:100%; background:transparent; border:none; border-bottom:1px solid var(--border); color:white; font-size:1.5rem; outline:none;">
+            </div>
+            <div class="card">
+                <span class="card-label">Parcial 2</span>
+                <input type="number" id="n2" placeholder="Nota..." style="width:100%; background:transparent; border:none; border-bottom:1px solid var(--border); color:white; font-size:1.5rem; outline:none;">
+            </div>
+            <div class="card" style="background: var(--accent); color: black;">
+                <span class="card-label" style="color: rgba(0,0,0,0.6);">Resultado</span>
+                <div class="card-value" id="final-res">0.0</div>
+                <div class="card-sub" id="status-res" style="color: black; font-weight: bold;">Ingresá notas</div>
+            </div>
+        </div>
+    </section>
+
+<script>
+    // Lógica de navegación
+    function nav(el, sectionId) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    // Lógica de Calculadora Automática
+    const inputs = [document.getElementById('n1'), document.getElementById('n2')];
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const v1 = parseFloat(inputs[0].value) || 0;
+            const v2 = parseFloat(inputs[1].value) || 0;
+            const avg = (v1 + v2) / 2;
+            
+            document.getElementById('final-res').innerText = avg.toFixed(1);
+            
+            const status = document.getElementById('status-res');
+            if (avg >= 7) {
+                status.innerText = "PROMOCIONADO";
+            } else if (avg >= 4) {
+                status.innerText = "A FINAL";
+            } else {
+                status.innerText = "RECURSA";
+            }
+        });
+    });
+
+    // Fecha
+    const d = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    document.getElementById('current-date').innerText = d.toLocaleDateString('es-AR', options).toUpperCase();
+</script>
 
 </body>
 </html>
